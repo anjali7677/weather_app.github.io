@@ -1,0 +1,51 @@
+// fetching the weather for current location
+// whenever user run this file first of all we have to allow the permission of allow the current location it means e hv to take the lattitude and longitude of the user
+// so for this we have to first take the location from user
+window.addEventListener("load",()=>{
+
+    let long;
+    let lat;
+    // if user allows his location
+    if(navigator.geolocation)
+    {
+        // position will give us the exact lattitude nd longitude of the current location
+        navigator.geolocation.getCurrentPosition((position)=>
+     {
+        // to find lattitude and longitude coords means coordinates
+        long=position.coords.longitude;
+        lat=position.coords.latitude;
+        // const proxy="https://cors-anywhere.herokuapp.com/";
+        //   we hv gone to he openweather site we clicked on current data and $ ign means it will varry the value
+          const api=`${proxy}https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid={5fc0bfabfe1e805fb3ec4c8e7fe9c4f7}`;
+
+
+        //  fetch help us to fetch data from api and the data(response) returned is in the form of json file or json format thus we hv to chng it in text file
+          fetch(api).then((response)=>
+          {
+              return response.json();
+          })
+          
+        //   conerting json file to text file
+          .then (data=>
+            {
+             const{name}=data;
+             const{feels_like}=data.main;
+             const{id,main}=data.weather[0];
+
+
+            //  to fit our current location to our location id
+                loc.textContent=name;
+                // below code will give us climate from our text file
+                climate.textContent=main;
+                // below code will give us temperature value from our text file in kelvin thus we will convert it to celcius by -273
+                tempvalue.textContent=Math.round(feels_like-273).toString();
+                console.log(data);
+            })
+    
+    }
+        )} 
+
+    
+    })
+// this load will automatically show the popup to enter a city name and this action is possible due to eventlistener
+// ()=>{}itb is a process of defining a func
